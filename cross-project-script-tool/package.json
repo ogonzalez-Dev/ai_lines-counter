@@ -1,0 +1,40 @@
+{
+  "name": "cross-project-script-tool",
+  "version": "1.0.0",
+  "description": "Herramienta para contar líneas de código generadas por GitHub Copilot en proyectos de software",
+  "main": "dist/index.js",
+  "bin": {
+    "ai-counter": "./bin/cli.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "cli": "ts-node bin/cli.ts",
+    "prepare-repos": "ts-node bin/prepare-repos.ts",
+    "dev": "ts-node src/index.ts",
+    "test": "npm run build && node dist/index.js"
+  },
+  "dependencies": {
+    "typescript": "^4.0.0",
+    "ts-node": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/cross-project-script-tool.git"
+  },
+  "keywords": [
+    "github-copilot",
+    "ai",
+    "code-analysis",
+    "lines-counter",
+    "scripts",
+    "cross-project",
+    "cli",
+    "typescript"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

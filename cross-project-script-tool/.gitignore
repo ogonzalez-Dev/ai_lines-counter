@@ -1,0 +1,64 @@
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+/build
+
+# TypeScript cache
+*.tsbuildinfo
+.ts-node/
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+.pnp
+.pnp.js
+
+# Logs
+logs/
+*.log
+
+# Package manager output
+*.tgz
+.npm
+
+# Coverage
+/coverage
+/.nyc_output
+
+# Environment variables (pueden contener rutas o tokens sensibles)
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+
+# Archivo de proyectos local (contiene rutas de máquina específica)
+projects.txt
+projects.txt.txt
+
+# Archivos de diagnóstico/debug locales
+diagnostic.ts
+diagnostic.js
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# VS Code (mantener solo configuración compartida del equipo)
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/extensions.json
