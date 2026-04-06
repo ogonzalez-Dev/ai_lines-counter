@@ -8,11 +8,11 @@ Instalación de paquetes
 `npm i`
 
 ### Usage
-Prepara todos los proyectos haciendo switch hacia la rama main (o en la que se quiera hacer el análisis)
+Prepara todos los proyectos haciendo switch hacia la rama main (o en la que se quiera hacer el análisis):
 
-`npm run prepare-repos -- -b develop`
+`npm run prepare-repos -- -b main`
 
-Se ejecuta este comando para realizar el análisis de las líneas con IA de todos los proyectos incluídos en el archivo _projects.txt_ 
+Se ejecuta este comando para realizar el análisis de las líneas con IA de todos los proyectos incluídos en el archivo _projects.txt_ :
 
 `npm run cli -- --all`
 
