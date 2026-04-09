@@ -19,14 +19,14 @@ D:/tu_ruta/MiLicencia/frontend/portal_adm/PortalAdminCentro
 ```
 
 ### Usage
-`npm run prepare-repos -- -b main`
+`npm run prepare-repos -- -b main`\
 Prepara todos los proyectos haciendo switch hacia la rama main (o en la que se quiera hacer el análisis) y hace un git pull enn cada una de estas rutas, para traer el código más actual
 
 **Resultado:**
 ```
-╔═══════════════════════════════════════════════════════════════╗
+╔══════════════════════════════════════════════════════════════╗
 ║      PREPARACIÓN DE REPOSITORIOS - CHECKOUT + PULL           ║
-╚═══════════════════════════════════════════════════════════════╝
+╚══════════════════════════════════════════════════════════════╝
 📂 Repositorios a verificar: 7
 
 [1/7] Procesando: ApiBackMiLicencia
@@ -46,7 +46,7 @@ Prepara todos los proyectos haciendo switch hacia la rama main (o en la que se q
 
 ----------------------------------------------------
 
-`npm run cli -- --all`
+`npm run cli -- --all`\
 Se ejecuta este comando para realizar el análisis de las líneas con IA de todos los proyectos incluídos en el archivo _projects.txt_
 **Resultado:**
 
