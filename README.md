@@ -23,7 +23,7 @@ D:/tu_ruta/MiLicencia/frontend/portal_adm/PortalAdminCentro
 Prepara todos los proyectos haciendo switch hacia la rama main (o en la que se quiera hacer el análisis) y hace un git pull enn cada una de estas rutas, para traer el código más actual
 
 **Resultado:**
-```
+```bash
 ╔══════════════════════════════════════════════════════════════╗
 ║      PREPARACIÓN DE REPOSITORIOS - CHECKOUT + PULL           ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -50,7 +50,7 @@ Prepara todos los proyectos haciendo switch hacia la rama main (o en la que se q
 Se ejecuta este comando para realizar el análisis de las líneas con IA de todos los proyectos incluídos en el archivo _projects.txt_
 **Resultado:**
 
-```
+```bash
 ╔═══════════════════════════════════════════════════════════════╗
 ║                       LINE COUNTER                            ║
 ║                   RESUMEN DE ANÁLISIS                         ║
