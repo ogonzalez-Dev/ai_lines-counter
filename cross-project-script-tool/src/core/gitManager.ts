@@ -9,6 +9,7 @@ export interface GitStatus {
     currentBranch?: string;
     hasUncommittedChanges?: boolean;
     switchedToMain?: boolean;
+    pulledFromRemote?: boolean;
     error?: string;
 }
 
@@ -104,7 +105,8 @@ export class GitManager {
             projectPath,
             projectName,
             isGitRepo: false,
-            switchedToMain: false
+            switchedToMain: false,
+            pulledFromRemote: false
         };
 
         // Verificar si es repositorio Git
@@ -124,39 +126,49 @@ export class GitManager {
 
         status.currentBranch = currentBranch;
 
-        // Si ya está en la rama objetivo, no hacer nada
-        if (currentBranch === this.targetBranch) {
-            status.switchedToMain = true;
-            return status;
-        }
-
         // Verificar si hay cambios sin commitear
         if (this.hasUncommittedChanges(projectPath)) {
             status.hasUncommittedChanges = true;
-            status.error = `Hay cambios sin commitear. Por favor, haz commit o stash de los cambios antes de cambiar de rama.`;
+            status.error = 'Hay cambios sin commitear. Por favor, haz commit o stash de los cambios antes de cambiar de rama y hacer pull.';
             return status;
         }
 
-        // Verificar si la rama objetivo existe
-        if (!this.branchExists(projectPath, this.targetBranch)) {
-            status.error = `La rama '${this.targetBranch}' no existe en este repositorio`;
-            return status;
+        // Si no está en la rama objetivo, intentar cambiar
+        if (currentBranch !== this.targetBranch) {
+            // Verificar si la rama objetivo existe
+            if (!this.branchExists(projectPath, this.targetBranch)) {
+                status.error = `La rama '${this.targetBranch}' no existe en este repositorio`;
+                return status;
+            }
+
+            try {
+                execSync(`git checkout ${this.targetBranch}`, {
+                    cwd: projectPath,
+                    encoding: 'utf-8',
+                    stdio: ['pipe', 'pipe', 'pipe']
+                });
+                status.switchedToMain = true;
+            } catch (error: any) {
+                status.error = `Error al cambiar a ${this.targetBranch}: ${error.message || 'Error desconocido'}`;
+                return status;
+            }
+        } else {
+            status.switchedToMain = true;
         }
 
-        // Intentar cambiar a la rama objetivo
+        // Ya en la rama objetivo: sincronizar con remoto
         try {
-            execSync(`git checkout ${this.targetBranch}`, {
+            execSync(`git pull origin ${this.targetBranch}`, {
                 cwd: projectPath,
                 encoding: 'utf-8',
                 stdio: ['pipe', 'pipe', 'pipe']
             });
-
-            status.switchedToMain = true;
-            return status;
+            status.pulledFromRemote = true;
         } catch (error: any) {
-            status.error = `Error al cambiar a ${this.targetBranch}: ${error.message || 'Error desconocido'}`;
-            return status;
+            status.error = `Error al hacer pull de '${this.targetBranch}': ${error.message || 'Error desconocido'}`;
         }
+
+        return status;
     }
 
     /**
@@ -166,7 +178,7 @@ export class GitManager {
         const results: GitStatus[] = [];
 
         console.log('\n╔═══════════════════════════════════════════════════════════════╗');
-        console.log('║          PREPARACIÓN DE REPOSITORIOS - RAMA MAIN             ║');
+        console.log('║      PREPARACIÓN DE REPOSITORIOS - CHECKOUT + PULL           ║');
         console.log('╚═══════════════════════════════════════════════════════════════╝\n');
         console.log(`📂 Repositorios a verificar: ${projectPaths.length}\n`);
 
@@ -182,10 +194,10 @@ export class GitManager {
 
             if (!status.isGitRepo) {
                 console.log(`    ⚠️  ${status.error}`);
-            } else if (status.switchedToMain && status.currentBranch === this.targetBranch) {
-                console.log(`    ✅ Ya estaba en '${this.targetBranch}'`);
-            } else if (status.switchedToMain) {
-                console.log(`    ✅ Cambiado de '${status.currentBranch}' → '${this.targetBranch}'`);
+            } else if (status.switchedToMain && status.currentBranch === this.targetBranch && status.pulledFromRemote) {
+                console.log(`    ✅ Ya estaba en '${this.targetBranch}' y se hizo pull`);
+            } else if (status.switchedToMain && status.pulledFromRemote) {
+                console.log(`    ✅ Cambiado de '${status.currentBranch}' → '${this.targetBranch}' y pull ejecutado`);
             } else if (status.error) {
                 console.log(`    ❌ ${status.error}`);
                 console.log(`    📝 Rama actual: ${status.currentBranch}`);
@@ -204,11 +216,12 @@ export class GitManager {
         const lines: string[] = [];
 
         lines.push('╔═══════════════════════════════════════════════════════════════╗');
-        lines.push('║                    RESUMEN DE OPERACIÓN                       ║');
+        lines.push('║             RESUMEN DE CHECKOUT + PULL                        ║');
         lines.push('╚═══════════════════════════════════════════════════════════════╝\n');
 
         const alreadyOnMain = results.filter(r => r.isGitRepo && r.currentBranch === this.targetBranch);
         const switchedSuccessfully = results.filter(r => r.isGitRepo && r.switchedToMain && r.currentBranch !== this.targetBranch);
+        const pullSuccessful = results.filter(r => r.isGitRepo && r.pulledFromRemote);
         const withErrors = results.filter(r => r.error && r.isGitRepo);
         const notGitRepos = results.filter(r => !r.isGitRepo);
 
@@ -216,6 +229,7 @@ export class GitManager {
         lines.push(`   • Total de proyectos: ${results.length}`);
         lines.push(`   • Ya estaban en '${this.targetBranch}': ${alreadyOnMain.length}`);
         lines.push(`   • Cambiados exitosamente: ${switchedSuccessfully.length}`);
+        lines.push(`   • Pull exitoso en '${this.targetBranch}': ${pullSuccessful.length}`);
         lines.push(`   • Con errores (requieren atención): ${withErrors.length}`);
         if (notGitRepos.length > 0) {
             lines.push(`   • No son repositorios Git: ${notGitRepos.length}`);
@@ -237,7 +251,7 @@ export class GitManager {
         // Estado final
         const allReady = withErrors.length === 0 && notGitRepos.length === 0;
         if (allReady) {
-            lines.push('✅ Todos los repositorios están listos en la rama \'main\'');
+            lines.push(`✅ Todos los repositorios están listos y actualizados en '${this.targetBranch}'`);
             lines.push('   Puedes ejecutar el análisis con: npm run cli -- --all');
         } else {
             lines.push('⚠️  Algunos repositorios requieren atención manual');

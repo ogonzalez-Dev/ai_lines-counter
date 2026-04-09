@@ -59,7 +59,7 @@ export async function analyzeProject(projectPath?: string, outputFile?: string, 
 }
 
 /**
- * Analiza múltiples proyectos configurados en projects.txt.txt
+ * Analiza múltiples proyectos configurados en projects.txt
  */
 export async function analyzeAllProjects(outputFile?: string, format: 'text' | 'json' = 'text', debugMode: boolean = false) {
     try {

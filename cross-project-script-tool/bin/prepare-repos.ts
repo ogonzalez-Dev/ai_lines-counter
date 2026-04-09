@@ -10,7 +10,7 @@ interface PrepareOptions {
 function showHelp() {
     console.log(`
 ╔═══════════════════════════════════════════════════════════════╗
-║        PREPARACIÓN DE REPOSITORIOS - CAMBIO A MAIN           ║
+║     PREPARACIÓN DE REPOSITORIOS - CHECKOUT + PULL            ║
 ╚═══════════════════════════════════════════════════════════════╝
 
 Uso:
@@ -21,13 +21,14 @@ Opciones:
   -h, --help                Muestra esta ayuda
 
 Descripción:
-  Este comando cambia todos los repositorios configurados en 
-  projects.txt.txt a la rama 'main' (o la rama especificada).
+    Este comando cambia todos los repositorios configurados en 
+    projects.txt a la rama objetivo y ejecuta git pull.
 
 Funcionalidades:
   ✓ Verifica si cada proyecto ya está en la rama objetivo
   ✓ Detecta cambios sin commitear y advierte al usuario
-  ✓ Intenta cambiar a la rama objetivo si es posible
+    ✓ Intenta cambiar a la rama objetivo si es posible
+    ✓ Ejecuta git pull origin <rama> en cada repositorio listo
   ✓ Genera un reporte de proyectos que requieren atención manual
 
 Ejemplos:
@@ -42,11 +43,11 @@ Ejemplos:
   npm run cli -- --all
 
 Flujo de trabajo recomendado:
-  1. npm run prepare-repos    ← Asegura que todos estén en 'main'
+    1. npm run prepare-repos    ← Deja todos en 'main' y actualizados
   2. npm run cli -- --all     ← Ejecuta el análisis de líneas AI
 
 Nota: Si algún repositorio tiene cambios sin commitear o conflictos,
-      se mostrará una advertencia y deberás revisar manualmente.
+            se mostrará una advertencia y deberás revisar manualmente.
     `);
 }
 
@@ -78,7 +79,7 @@ async function main() {
     try {
         const targetBranch = options.branch || 'main';
         
-        console.log(`\n🔄 Preparando repositorios para cambiar a la rama: ${targetBranch}\n`);
+        console.log(`\n🔄 Preparando repositorios para checkout + pull en la rama: ${targetBranch}\n`);
         
         const results = await prepareRepositories(targetBranch);
         

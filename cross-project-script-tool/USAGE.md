@@ -40,10 +40,10 @@ npm run cli "/home/usuario/proyectos/mi-app"
 
 **⚡ Flujo de trabajo recomendado:**
 
-Antes de analizar múltiples proyectos, asegúrate de que todos estén en la rama `main`:
+Antes de analizar múltiples proyectos, asegúrate de que todos estén en la rama `main` y actualizados:
 
 ```bash
-# 1. Preparar todos los repositorios (cambiarlos a la rama 'main')
+# 1. Preparar todos los repositorios (checkout a 'main' + pull)
 npm run prepare-repos
 
 # 2. Ejecutar el análisis de líneas AI
@@ -53,10 +53,11 @@ npm run cli -- --all
 #### ¿Qué hace `npm run prepare-repos`?
 
 Este comando:
-- ✅ Lee las rutas de proyectos desde `projects.txt.txt`
+- ✅ Lee las rutas de proyectos desde `projects.txt`
 - ✅ Verifica si cada repositorio ya está en la rama `main`
 - ✅ Detecta cambios sin commitear y advierte si los hay
 - ✅ Cambia automáticamente a `main` si es posible
+- ✅ Ejecuta `git pull origin main` en los repositorios listos
 - ✅ Genera un reporte de proyectos que requieren atención manual
 
 #### Ejemplo de salida:
@@ -115,11 +116,11 @@ Analiza múltiples proyectos en una sola ejecución usando el flag `--all`:
 npm run cli --all
 ```
 
-Este comando analizará todos los proyectos configurados en el archivo `projects.txt.txt` y mostrará una tabla resumen consolidada.
+Este comando analizará todos los proyectos configurados en el archivo `projects.txt` y mostrará una tabla resumen consolidada.
 
 #### Configuración de Proyectos
 
-Edita el archivo `projects.txt.txt` en la raíz del proyecto y agrega las rutas de los proyectos a analizar (una por línea):
+Edita el archivo `projects.txt` en la raíz del proyecto y agrega las rutas de los proyectos a analizar (una por línea):
 
 ```
 # Configuración de Proyectos para Análisis Multi-Proyecto
@@ -290,10 +291,10 @@ npm run cli
 
 ### 1. Analizar Múltiples Proyectos
 
-**Método Recomendado (Nuevo):** Usa el flag `--all` con el archivo `projects.txt.txt`:
+**Método Recomendado (Nuevo):** Usa el flag `--all` con el archivo `projects.txt`:
 
 ```bash
-# Edita projects.txt.txt con las rutas de tus proyectos
+# Edita projects.txt con las rutas de tus proyectos
 npm run cli --all
 ```
 

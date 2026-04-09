@@ -8,8 +8,8 @@ export class ProjectsConfig {
     private configFilePath: string;
 
     constructor(configFilePath?: string) {
-        // Por defecto busca projects.txt.txt en la raíz del proyecto
-        this.configFilePath = configFilePath || path.join(process.cwd(), 'projects.txt.txt');
+        // Por defecto busca projects.txt en la raíz del proyecto
+        this.configFilePath = configFilePath || path.join(process.cwd(), 'projects.txt');
     }
 
     /**

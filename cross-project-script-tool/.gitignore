@@ -38,7 +38,7 @@ logs/
 
 # Archivo de proyectos local (contiene rutas de máquina específica)
 projects.txt
-projects.txt.txt
+projects.txt
 
 # Archivos de diagnóstico/debug locales
 diagnostic.ts

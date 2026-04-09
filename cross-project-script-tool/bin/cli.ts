@@ -24,7 +24,7 @@ Uso:
 
 Opciones:
   [ruta-proyecto]           Ruta del proyecto a analizar (por defecto: directorio actual)
-  -a, --all                 Analiza todos los proyectos configurados en projects.txt.txt
+  -a, --all                 Analiza todos los proyectos configurados en projects.txt
   -o, --output <archivo>    Guarda el reporte en un archivo
   -f, --format <formato>    Formato del reporte: text o json (por defecto: text)
   -d, --debug               Modo debug: muestra información detallada de detección
