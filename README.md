@@ -48,6 +48,7 @@ Prepara todos los proyectos haciendo switch hacia la rama main (o en la que se q
 
 `npm run cli -- --all`\
 Se ejecuta este comando para realizar el análisis de las líneas con IA de todos los proyectos incluídos en el archivo _projects.txt_
+
 **Resultado:**
 
 ```bash
