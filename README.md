@@ -7,8 +7,19 @@ git clone del proyecto
 Instalación de paquetes
 `npm i`
 
+### Rutas de los archivos a analizar
+En el `projects.txt` ubicado en la raíz del proyecto, se encuentran las rutas que se van a analizar, se deben cambiar por las rutas locales de los proyectos, así:
+```
+D:/tu_ruta/MiLicencia/backend/ApiBackMiLicencia
+D:/tu_ruta/ApiBackPortalAdm/ApiBackPortalAdminCentro
+D:/tu_ruta/MiLicencia/backend/ApiBackIntegrador
+D:/tu_ruta/MiLicencia/backend/ApiFrontMiLicencia
+D:/tu_ruta/MiLicencia/frontend/FrontEndCentro
+D:/tu_ruta/MiLicencia/frontend/portal_adm/PortalAdminCentro
+```
+
 ### Usage
-Prepara todos los proyectos haciendo switch hacia la rama main (o en la que se quiera hacer el análisis):
+Prepara todos los proyectos haciendo switch hacia la rama main (o en la que se quiera hacer el análisis) y hace un git pull enn cada una de estas rutas, para traer el código más actual:
 
 `npm run prepare-repos -- -b main`
 
