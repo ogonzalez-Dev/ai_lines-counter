@@ -19,6 +19,8 @@ D:/tu_ruta/MiLicencia/frontend/portal_adm/PortalAdminCentro
 ```
 
 ### Usage
+Los siguientes comandos se ejecutarán en la raíz del proyecto de conteo de líneas:
+
 `npm run prepare-repos -- -b main`\
 Prepara todos los proyectos haciendo switch hacia la rama main (o en la que se quiera hacer el análisis) y hace un git pull enn cada una de estas rutas, para traer el código más actual
 
